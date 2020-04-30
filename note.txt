@@ -1,0 +1,82 @@
+package com.stackroute;
+
+import java.util.*;
+
+public class LongestSpan {
+
+    //Do not print anything other than what's expected/asked in problem
+    public static void main(String[] args) {
+        //Use Scanner to get input from console
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] numbers = new int[n];
+        for (int i = 0; i < n; i++) {
+            numbers[i] = sc.nextInt();
+        }
+        String out = LongestSpan.findLongestSpan(numbers);
+        if (out == "-1") {
+            System.out.println("Empty Array");
+        } else {
+            System.out.println(out);
+        }
+
+
+    }
+
+    public static String findLongestSpan(int[] numbers) {
+        Map<Integer, Integer> spannum = new HashMap<Integer, Integer>();
+        List<Integer> spanlist = new ArrayList<Integer>();
+        int span = 0;
+        int key = 0;
+        int i = 0;
+        int j = 0;
+        if (numbers.length == 0 || numbers == null) {
+            return "-1";
+        }
+
+        for (i = 0; i < numbers.length; i++) {
+            key = numbers[i];
+            if (spannum.containsKey(key)) {
+                span = spannum.get(key);
+                span = i  + 1;
+                spannum.put(key, span);
+            } else {
+                span = 1;
+                spannum.put(key, span);
+            }
+
+        }
+        //System.out.println(spannum);
+        //find max span from map
+        int max = 0;
+        int value = 0;
+        for (Integer keys : spannum.keySet()) {
+            value = spannum.get(keys);
+            if (value > max) {
+                max = value;
+                spanlist.clear();
+                spanlist.add(keys);
+
+            } else if (value == max) {
+                spanlist.add(keys);
+            }
+        }
+      /*  for(int k=0;k<spanlist.size();k++) {
+            System.out.println(spanlist);
+        }*/
+        int val = 0;
+      //  val = spannum.get(spanlist.get(0));
+        int MAX=0;
+        for(int g=0;g<spanlist.size();g++){
+            val=spanlist.get(g);
+            if(val>MAX){
+                MAX=val;
+            }
+        }
+
+        int VALUE=spannum.get(MAX);
+         System.out.println(VALUE);
+        String s = MAX + ":" + VALUE;
+        return s;
+    }
+}
